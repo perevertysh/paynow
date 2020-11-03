@@ -13,3 +13,5 @@
 5. Запустить отладочный сервер Django командой:
   > python manage.py runserver
 
+Для запуска тестов необходимо выполнить команду:
+  > python manage.py test
