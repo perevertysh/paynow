@@ -1,0 +1,83 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$E9Bxqc8qbtMb$+8GbHOfxxNr1MaJJh2nFDSq9EgT21nuD7oeWkDD++Uw=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user01",
+      "first_name": "John",
+      "last_name": "Johnson",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-11-02T21:51:51Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$X391oEEO0OZa$Y0AJx+YYeaLPYeHFZ2y7XOtSWbZirlebebDaGV+hFXs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user02",
+      "first_name": "Richard",
+      "last_name": "Richardson",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-11-02T21:52:41Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$EbhKljPkwwDa$SOp8qh43tWbn5r+NENqD2HqyphuqD7YboEJINI2AyvI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user03",
+      "first_name": "James",
+      "last_name": "Jamesson",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-11-02T23:30:21Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "account.account",
+    "pk": "2307f824-823b-430d-8981-d246de107fec",
+    "fields": {
+      "user": 3,
+      "inn": "325648698745",
+      "amount": "0"
+    }
+  },
+  {
+    "model": "account.account",
+    "pk": "24a656f8-9488-4dbf-b7e7-525731d57300",
+    "fields": {
+      "user": 4,
+      "inn": "654987655498",
+      "amount": "0"
+    }
+  },
+  {
+    "model": "account.account",
+    "pk": "9ff555bb-90f2-435d-86fa-6b9ef1970dd7",
+    "fields": {
+      "user": 2,
+      "inn": "012365489745",
+      "amount": "150"
+    }
+  }
+]
