@@ -22,6 +22,30 @@ class CheckerTest(APITestCase):
         self.assertTrue(response.data,
                         f"Wrong data: {response.data}")
 
+    def test_create_account(self):
+        """Test creating of new account"""
+        response = self.client.post(reverse("account-list"),
+                                    {"inn": "012345678912",
+                                     "amount": 100000.00,
+                                     "user": 5})
+
+        self.assertEqual(response.status_code, 201,
+                         f"Wrong status code: {response.status_code} "
+                         f"\n {response.data}")
+        self.assertTrue(response.data,
+                        f"Wrong data: {response.data}")
+
+    def test_validation_inn(self):
+        """Validation account' inn field test"""
+        response = self.client.post(reverse("account-list"),
+                                    {"inn": "0123456789XX",
+                                     "amount": 100000.00,
+                                     "user": 5})
+
+        self.assertEqual(response.status_code, 400,
+                         f"Wrong status code: {response.status_code} "
+                         f"\n {response.data}")
+
     def test_send_money(self):
         """Send money endpoint test"""
 

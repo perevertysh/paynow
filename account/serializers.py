@@ -7,6 +7,14 @@ from .models import Account
 
 
 class AccountSerializer(serializers.ModelSerializer):
+    inn = serializers.CharField(max_length=12, required=True, label="ИНН")
+
+    def validate_inn(self, value):
+        if not separate_recipients(value):
+            raise serializers.ValidationError("Проверьте корректность "
+                                              "вводимого ИНН")
+        return value
+
     class Meta:
         model = Account
         fields = "__all__"

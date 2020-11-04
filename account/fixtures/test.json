@@ -53,6 +53,24 @@
       "user_permissions": []
     }
   },
+    {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$4LhGhwjA08qn$MKsgYtjbHX7/dFSHJExqzkKhtRaue6Ud8VkcqZrAPTU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user04",
+      "first_name": "Test",
+      "last_name": "Test",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-11-04T11:50:45Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
   {
     "model": "account.account",
     "pk": "2307f824-823b-430d-8981-d246de107fec",
