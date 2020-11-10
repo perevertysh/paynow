@@ -1,3 +1,4 @@
+from typing import AnyStr
 import uuid
 
 from django.contrib.auth.models import User
@@ -20,5 +21,5 @@ class Account(models.Model):
                                  decimal_places=2,
                                  verbose_name=_("Величина счета, Rub"))
 
-    def __str__(self):
+    def __str__(self) -> AnyStr:
         return f"{self.user.first_name} {self.user.last_name}: {self.inn}"

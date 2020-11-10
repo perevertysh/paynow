@@ -4,6 +4,7 @@ from rest_framework import filters
 
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.request import Request
 
 from .models import Account
 from .serializers import AccountSerializer, TransactionSerializer
@@ -21,12 +22,11 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     filterset_fields = ('inn', 'user__login',)
 
-    # Дополнительный метод для проведения операции перевода средств
-    # между счетами.
+    # Method for transaction processing
     @action(methods=['POST'],
             detail=False,
             serializer_class=TransactionSerializer)
-    def send_money(self, request):
+    def send_money(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         report = process_transaction(request.data["amount"],

@@ -1,12 +1,14 @@
 import decimal
 import re
+from typing import AnyStr, List
 
 from .models import Account
 from django.db import transaction
 
 
-# Обработка операции по переводу средств.
-def process_transaction(amount, sender, recipients):
+def process_transaction(amount: decimal.Decimal,
+                        sender: AnyStr,
+                        recipients: AnyStr) -> AnyStr:
     with transaction.atomic():
 
         amount = decimal.Decimal(amount)
@@ -30,8 +32,8 @@ def process_transaction(amount, sender, recipients):
                f"Счета получателей: {recipients_report}"
 
 
-# Уменьшение значения Суммы счета Отправителя.
-def decrease_sender_account_amount(sender, amount):
+def decrease_sender_account_amount(sender: AnyStr,
+                                   amount: decimal.Decimal) -> AnyStr:
     sender = Account.objects.get(id=sender)
     sender.amount -= amount
     sender.save()
@@ -39,8 +41,8 @@ def decrease_sender_account_amount(sender, amount):
     return report
 
 
-# Увеличение значения Суммы счета получателей.
-def increase_recipients_accounts_amount(recipients, amount):
+def increase_recipients_accounts_amount(recipients: List,
+                                        amount: decimal.Decimal) -> AnyStr:
     recipients_for_report = recipients
     recipients = Account.objects.filter(inn__in=recipients)
     for recipient in recipients:
@@ -53,5 +55,5 @@ def increase_recipients_accounts_amount(recipients, amount):
     return report
 
 
-def separate_recipients(recipients):
+def separate_recipients(recipients: AnyStr) -> List:
     return re.findall(r'(\d{12})', recipients)
