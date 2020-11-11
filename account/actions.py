@@ -13,7 +13,7 @@ def process_transaction(amount: decimal.Decimal,
 
         amount = decimal.Decimal(amount)
 
-        recipients_list = separate_recipients(recipients)
+        recipients_list = separate_recipients_inn(recipients)
 
         sender_report = decrease_sender_account_amount(sender, amount)
 
@@ -25,8 +25,9 @@ def process_transaction(amount: decimal.Decimal,
         else:
             mount_part = amount
 
-        recipients_report = increase_recipients_accounts_amount(recipients_list,
-                                                                mount_part)
+        recipients_report = increase_recipients_accounts_amount(
+            recipients_list,
+            mount_part)
 
         return f"Счет отправителя: {sender_report}\n" \
                f"Счета получателей: {recipients_report}"
@@ -55,5 +56,10 @@ def increase_recipients_accounts_amount(recipients: List,
     return report
 
 
-def separate_recipients(recipients: str) -> List:
-    return re.findall(r'(\d{12})', recipients)
+def separate_recipients_inn(recipients_inn: str) -> List:
+    return re.findall(r'(\d{12})', recipients_inn)
+
+
+def get_recipients_inn_list(inn_input: List) -> List:
+    return [ac[0] for ac in
+            Account.objects.filter(inn__in=inn_input).values_list("inn")]
