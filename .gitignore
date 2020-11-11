@@ -1,5 +1,7 @@
 /.idea/
 
+.dmypy.json
+
 *.log
 *.pot
 *.pyc
