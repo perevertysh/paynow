@@ -1,40 +1,40 @@
 import decimal
 import re
-from typing import AnyStr, List
+from typing import List
 
 from .models import Account
 from django.db import transaction
 
 
 def process_transaction(amount: decimal.Decimal,
-                        sender: AnyStr,
-                        recipients: AnyStr) -> AnyStr:
+                        sender: str,
+                        recipients: str) -> str:
     with transaction.atomic():
 
         amount = decimal.Decimal(amount)
 
-        recipients = separate_recipients(recipients)
+        recipients_list = separate_recipients(recipients)
 
         sender_report = decrease_sender_account_amount(sender, amount)
 
-        if not isinstance(recipients, str):
+        if not isinstance(recipients_list, str):
             try:
-                mount_part = amount / decimal.Decimal(len(recipients))
+                mount_part = amount / decimal.Decimal(len(recipients_list))
             except ZeroDivisionError as e:
                 raise e
         else:
             mount_part = amount
 
-        recipients_report = increase_recipients_accounts_amount(recipients,
+        recipients_report = increase_recipients_accounts_amount(recipients_list,
                                                                 mount_part)
 
         return f"Счет отправителя: {sender_report}\n" \
                f"Счета получателей: {recipients_report}"
 
 
-def decrease_sender_account_amount(sender: AnyStr,
-                                   amount: decimal.Decimal) -> AnyStr:
-    sender = Account.objects.get(id=sender)
+def decrease_sender_account_amount(sender_id: str,
+                                   amount: decimal.Decimal) -> str:
+    sender = Account.objects.get(id=sender_id)
     sender.amount -= amount
     sender.save()
     report = f"{sender}: {sender.amount}"
@@ -42,7 +42,7 @@ def decrease_sender_account_amount(sender: AnyStr,
 
 
 def increase_recipients_accounts_amount(recipients: List,
-                                        amount: decimal.Decimal) -> AnyStr:
+                                        amount: decimal.Decimal) -> str:
     recipients_for_report = recipients
     recipients = Account.objects.filter(inn__in=recipients)
     for recipient in recipients:
@@ -55,5 +55,5 @@ def increase_recipients_accounts_amount(recipients: List,
     return report
 
 
-def separate_recipients(recipients: AnyStr) -> List:
+def separate_recipients(recipients: str) -> List:
     return re.findall(r'(\d{12})', recipients)
